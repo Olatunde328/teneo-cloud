@@ -1,4 +1,6 @@
 const express = require("express");
+require("dotenv").config();
+const { Telegraf } = require("telegraf");
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -19,42 +21,6 @@ app.listen(PORT, () => {
   console.log(`🌐 Health server running on ${PORT}`);
 });
 
-require("dotenv").config();
-
-const express = require("express");
-const axios = require("axios");
-const { Telegraf } = require("telegraf");
-
-// =====================
-// EXPRESS HEALTH SERVER
-// =====================
-const app = express();
-
-const PORT = process.env.PORT || 3000;
-
-app.get("/", (req, res) => {
-  res.send("🛡️ TENEO CLOUD CORE ACTIVE");
-});
-
-app.get("/", (_, res) => {
-  res.send("🧠 TENEO Production Core Active");
-});
-
-app.get("/health", (_, res) => {
-  res.json({
-    status: "ok",
-    uptime: process.uptime(),
-    timestamp: new Date()
-  });
-});
-
-app.listen(PORT, () => {
-  log(`🌐 Health server running on ${PORT}`);
-});
-
-// =====================
-// TELEGRAM BOT
-// =====================
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 // =====================
