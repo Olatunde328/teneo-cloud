@@ -37,25 +37,26 @@ function log(...msg) {
 // SAFE API FETCH
 // =====================
 async function safeFetch(url, retries = 3) {
-
-  for (let i = 0; i < retries; i++) {
-
+  for (let i = 1; i <= retries; i++) {
     try {
-
-      const res = await axios.get(url, {
-        timeout: 10000
+      const response = await axios.get(url, {
+        timeout: 10000,
+        headers: {
+          "User-Agent": "Mozilla/5.0"
+        }
       });
 
-      return res.data;
+      return response.data;
 
     } catch (err) {
+      log(`⚠️ API FAIL (${i}/${retries})`);
 
-      log(`⚠️ API FAIL (${i + 1}/${retries})`);
+      if (i === retries) throw err;
 
-      if (i === retries - 1) {
-        throw err;
-      }
-
+      await new Promise(r => setTimeout(r, 2000));
+    }
+  }
+}
       await new Promise(r => setTimeout(r, 2000));
     }
   }
