@@ -69,12 +69,12 @@ async function getPrice(id) {
   try {
 
     const data = await safeFetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd&include_24hr_change=true`
+      `https://api.binance.com/api/v3/ticker/24hr?symbol=${id}`
     );
 
     return {
-      price: data[id]?.usd,
-      change: data[id]?.usd_24h_change || 0
+      price: parseFloat(data.lastPrice),
+      change: parseFloat(data.priceChangePercent) || 0
     };
 
   } catch (err) {
@@ -122,9 +122,9 @@ function signal(change) {
 async function scanner() {
 
   const assets = [
-    { id: "bitcoin", symbol: "BTC" },
-    { id: "ethereum", symbol: "ETH" },
-    { id: "solana", symbol: "SOL" }
+    { id: "BTCUSDT", symbol: "BTC" },
+    { id: "ETHUSDT", symbol: "ETH" },
+    { id: "SOLUSDT", symbol: "SOL" }
   ];
 
   for (const a of assets) {
