@@ -40,7 +40,7 @@ async function safeFetch(url, retries = 3) {
   for (let i = 1; i <= retries; i++) {
     try {
       const response = await axios.get(url, {
-        timeout: 10000,
+        timeout: 20000,
         headers: {
           "User-Agent": "Mozilla/5.0"
         }
@@ -51,13 +51,11 @@ async function safeFetch(url, retries = 3) {
     } catch (err) {
       log(`⚠️ API FAIL (${i}/${retries})`);
 
-      if (i === retries) throw err;
+      if (i === retries) {
+        throw err;
+      }
 
-      await new Promise(r => setTimeout(r, 2000));
-    }
-  }
-}
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise(resolve => setTimeout(resolve, 2000));
     }
   }
 }
@@ -226,3 +224,4 @@ process.once("SIGTERM", () => {
 
 log("🛡️ TENEO RAILWAY HARDENED CORE ACTIVE");
 
+// redeploy
