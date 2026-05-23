@@ -68,7 +68,7 @@ async function getPrice(id) {
   try {
 
     const data = await safeFetch(
-      `https://api.binance.com/api/v3/ticker/24hr?symbol=${id}`
+      `https://api.binance.com/api/v3/ticker/price?symbol=${id}`
     );
 
     return {
@@ -163,7 +163,7 @@ setInterval(async () => {
     log("🔥 LOOP FAILURE:", err.message);
   }
 
-}, 120000);
+}, 60000);
 
 // =====================
 // TELEGRAM COMMANDS
